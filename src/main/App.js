@@ -30,7 +30,7 @@ const App = () => {
     setTimeout(() => {
       let botResponse = "";
       if (input === INITPROMPT) {
-        botResponse = `Sound and meaning— You’re delving into some pretty complex topics! Sound and meaning is not merely a tool to make the work pleasurable to the reader— it’s to place the author’s intention of the work dead center. So that the reader can’t miss **there** point.`;
+        botResponse = `Sound and meaning— You’re delving into some pretty complex topics! Sound and meaning is not merely a tool to make the work pleasurable to the reader— it’s to place the author’s intention of the work at the dead center. So that the reader can’t miss **there** point. In “Shaving,” Blanco employs a myriad of phonetic devices to both create a dichotomy between different stages of his life—when his father is in his life and when he is not—and to reveal the aimless nature in which he travels through life.`;
       } else {
         botResponse = `You're absolutely right! I did misspell that word. Thanks for catching that! In my defense, I did have a 101° fever when I wrote that.`
       }
@@ -87,6 +87,12 @@ const App = () => {
         <div className='side-menu-newChat' >
           <span className='plus'></span> Summary of Wuthering Heights
         </div>
+        {/* <div className='side-menu-newChat' >
+          <span className='plus'></span> How to Cheat in English Class
+        </div>
+        <div className='side-menu-newChat' >
+          <span className='plus'></span> Kate Bush Discography
+        </div> */}
         </div>
         
         <div className='side-menu-bottom'>
@@ -170,13 +176,16 @@ const LoadingDots = ({ mode }) => {
   )
 }
 
+
 const ChatMessage = ({ message, mode }) => {
   let formattedMessage;
   console.log(message.message);
   console.log(typeof message.message);
-  const parts = (typeof message.message !== "string" ? "" : message.message).split("**");
-  if (parts.length > 2) {
-    formattedMessage = parts.map((part, index) => {
+
+  //parse bad words
+  const badParts = (typeof message.message !== "string" ? "" : message.message).split("**");
+  if (badParts.length > 2) {
+    formattedMessage = badParts.map((part, index) => {
       if (index % 2 === 1) {
         return <span key={index} className='bad-word'>{part}</span>;
       }
@@ -185,6 +194,8 @@ const ChatMessage = ({ message, mode }) => {
   } else {
     formattedMessage = message.message;
   }
+
+  
   return (
     <div className={`chat-message ${mode === 'dark' ? 'bg-dark' : 'bg-white'}`} >
       <div className='chat-message-center'>
